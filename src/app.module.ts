@@ -9,8 +9,8 @@ import {CommentsModule} from "./comments/comments.module";
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
+      host: 'cmmt-mysql',
+      port: 3307,
       username: 'root',
       password: '1234',
       database: 'comments',
