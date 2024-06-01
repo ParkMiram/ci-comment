@@ -7,10 +7,14 @@ export class CommentsController {
     constructor(private readonly commentsService: CommentsService) {}
 
     // 전체 조회
+    @Get('/comments')
+    async getAll() {
+        return this.commentsService.findAll();
+    }
+    // 게시글 댓글 조회
     @Get('/:bid/comments')
     async getAllComments(@Param('bid') boardId: number): Promise<Comment[]> {
-        console.log('asdasd');
-        return this.commentsService.findAll(boardId);
+        return this.commentsService.findAllByBoardId(boardId);
     }
 
     // 저장
