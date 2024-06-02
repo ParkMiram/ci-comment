@@ -33,10 +33,10 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         
     - name: Docker build
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO }} .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:cmmt .
       
     - name: Docker push
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO }}
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:cmmt
       
     - name: Connect SSH to GCE
       uses: appleboy/ssh-action@v1.0.3
@@ -45,6 +45,6 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO }}
-          docker rm -f ${{secrets.DOCKER_REPO }}
-          docker run --name ${{secrets.DOCKER_REPO }} -p 3000:3000 --network server -d ${{ secrets.DOCKER_USERNAME }}/${{secrets.DOCKER_REPO }}
+          docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:cmmt
+          docker rm -f ${{ secrets.DOCKER_REPO }}:cmmt
+          docker run --name ci-cmmt -p 3001:3001 --network server -d ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:cmmt
